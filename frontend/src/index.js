@@ -10,6 +10,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 
 import reducers from './reducers';
 import App from './App';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './style/index.css';
 import 'mdbreact/dist/css/mdb.css';

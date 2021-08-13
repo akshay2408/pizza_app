@@ -1,21 +1,20 @@
-function App() {
+import React from 'react';
+// import HomePage from './components/home/HomePage';
+import { Switch, Route } from 'react-router-dom';
+import HomePage from './components/Home/HomePage';
+import { Header, FooterComponent as Footer } from './components/Layout';
+const App = () => {
   return (
     <div className='App'>
-      <header className='App-header'>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <main>
+        <Switch>
+          <Route exact path='/' component={HomePage} />
+        </Switch>
+      </main>
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
