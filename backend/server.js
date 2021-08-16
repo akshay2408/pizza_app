@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const { connect } = require('mongoose');
 const bodyParser = require('body-parser');
+const { addUser, addAdmin } = require('./Seeder');
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ connect(process.env.DB_URL, {
 })
   .then(() => {
     console.log('Database connected successfully!!!');
+    addAdmin(); // add admin user
+    addUser(); // add customer user
   })
   .catch((error) => {
     console.log('Error in database connection', error.message);
