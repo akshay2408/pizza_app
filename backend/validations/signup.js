@@ -49,4 +49,4 @@ const validateSignupForm = (payload) => {
   };
 };
 
-module.export = validateSignupForm;
+module.exports = validateSignupForm;

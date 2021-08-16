@@ -1,3 +1,4 @@
+const passport = require('passport');
 const { signUpValidate, loginValidate } = require('../validations');
 
 /*
@@ -57,7 +58,6 @@ const login = async (req, res, next) => {
           message: err.message,
         });
       }
-
       return res.status(200).json({
         success: false,
         message: 'Could not process the form.',

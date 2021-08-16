@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const PassportLocalStrategy = require('passport-local').Strategy;
-const UserModel = require('../models');
+const { UserModel } = require('../models');
 
 const login = new PassportLocalStrategy(
   {
@@ -30,8 +30,8 @@ const login = new PassportLocalStrategy(
         username: user.username,
       };
 
-      if (user.roles) {
-        data.roles = user.roles;
+      if (user.role) {
+        data.role = user.role;
       }
 
       return done(null, token, data);

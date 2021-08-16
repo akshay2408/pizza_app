@@ -1,14 +1,50 @@
 import React from 'react';
+import Auth from '../../utils/auth';
+import { Link } from 'react-router-dom';
+import ProductMenu from '../ProductMenu/ProductMenu';
+const HomePage = (props) => {
+  const isAdmin = Auth.isUserAdmin();
+  const isAuthenticated = Auth.isUserAuthenticated();
 
-const HomePage = () => {
+  let headingText, secondLinkName, secondLinkPath;
+  if (isAdmin) {
+    headingText = ', ' + Auth.getUsername();
+    secondLinkName = 'View pending orders';
+    secondLinkPath = '/admin/orders';
+  } else if (isAuthenticated) {
+    headingText = ', ' + Auth.getUsername();
+    secondLinkName = 'View orders';
+    secondLinkPath = '/orders';
+  } else {
+    headingText = '';
+    secondLinkName = 'Register';
+    secondLinkPath = '/register';
+  }
+
   return (
-    <div className='container'>
-      <section className='jumbotron text-center'>
-        <div className='container'>
-          <h1 className='jumbotron-heading'>Welcome to Pizza App</h1>
-        </div>
-      </section>
-    </div>
+    <>
+      <div className='container'>
+        <section className='jumbotron text-center'>
+          <div className='container'>
+            <h1 className='jumbotron-heading'>
+              Welcome to Pizza App{headingText} !
+            </h1>
+            {!isAuthenticated && (
+              <p className='lead text-muted'>
+                Your favourite pizza is now just a few clicks away. Register now
+                and choose from our decent menu.
+              </p>
+            )}
+            <p>
+              <Link to={secondLinkPath} className='btn btn-secondary'>
+                {secondLinkName}
+              </Link>
+            </p>
+          </div>
+        </section>
+      </div>
+      <ProductMenu {...props} />
+    </>
   );
 };
 

@@ -7,7 +7,7 @@ const http = require('http');
 const { connect } = require('mongoose');
 const bodyParser = require('body-parser');
 
-const { addUser, addAdmin } = require('./Seeder');
+const { addUser, addAdmin, addProducts, addIngredients } = require('./Seeder');
 
 const apiRoutes = require('./routes');
 const { loginAuth, signUpAuth } = require('./passport');
@@ -29,6 +29,8 @@ connect(process.env.DB_URL, {
     console.log('Database connected successfully!!!');
     addAdmin(); // add admin user
     addUser(); // add customer user
+    addProducts(); // add pizza
+    addIngredients(); //add ingredients
   })
   .catch((error) => {
     console.log('Error in database connection', error.message);
@@ -45,7 +47,7 @@ const corsOption = {
 };
 
 app.use(cors(corsOption));
-app.use('/api/v1', apiRoutes);
+app.use('/', apiRoutes);
 
 /*
 -------------------
@@ -54,6 +56,7 @@ app.use('/api/v1', apiRoutes);
 */
 passport.use('signup-auth', signUpAuth);
 passport.use('login-auth', loginAuth);
+
 /*
 ------------------
     Create Server

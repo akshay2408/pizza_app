@@ -14,6 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './style/index.css';
 import 'mdbreact/dist/css/mdb.css';
+import '../node_modules/toastr/build/toastr.min.css';
 
 /*
 ----------------------

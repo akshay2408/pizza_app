@@ -1,3 +1,4 @@
+const validator = require('validator');
 /*
 ---------------------------------------
     Function to validate login form
@@ -38,4 +39,4 @@ const validateLoginForm = (payload) => {
   };
 };
 
-module.export = validateLoginForm;
+module.exports = validateLoginForm;

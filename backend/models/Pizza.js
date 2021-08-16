@@ -6,9 +6,7 @@ let pizzaSchema = new Schema({
   name: {
     type: Schema.Types.String,
     required: REQUIRED_VALIDATION_MESSAGE,
-    unique: [true, 'Pizza already exists.'],
   },
-  ingredients: [{ type: Schema.Types.String }],
   weight: {
     type: Schema.Types.Number,
     required: REQUIRED_VALIDATION_MESSAGE,
@@ -18,6 +16,7 @@ let pizzaSchema = new Schema({
     type: Schema.Types.Number,
     required: REQUIRED_VALIDATION_MESSAGE,
   },
+  size: { type: String, default: 'Small', enum: ['Small', 'Medium', 'Large'] },
   image: {
     type: Schema.Types.String,
     required: REQUIRED_VALIDATION_MESSAGE,

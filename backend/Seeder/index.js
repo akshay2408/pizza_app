@@ -1,4 +1,5 @@
 const addAdmin = require('./addAdmin');
 const addUser = require('./addUser');
-
-module.exports = { addUser, addAdmin };
+const addProducts = require('./addProducts');
+const addIngredients = require('./addIngredient');
+module.exports = { addUser, addAdmin, addProducts, addIngredients };
