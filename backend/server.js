@@ -1,11 +1,16 @@
 const express = require('express');
-const http = require('http');
+const passport = require('passport');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const http = require('http');
 
 const { connect } = require('mongoose');
 const bodyParser = require('body-parser');
+
 const { addUser, addAdmin } = require('./Seeder');
+
+const apiRoutes = require('./routes');
+const { loginAuth, signUpAuth } = require('./passport');
 
 dotenv.config();
 
@@ -40,7 +45,15 @@ const corsOption = {
 };
 
 app.use(cors(corsOption));
+app.use('/api/v1', apiRoutes);
 
+/*
+-------------------
+  Setup Passport
+-------------------
+*/
+passport.use('signup-auth', signUpAuth);
+passport.use('login-auth', loginAuth);
 /*
 ------------------
     Create Server
