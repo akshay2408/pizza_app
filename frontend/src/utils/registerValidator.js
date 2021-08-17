@@ -1,9 +1,15 @@
 import toastr from 'toastr';
+
 const emailRegex = new RegExp(
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 );
 
-function registerValidator(username, email, password, confirmPassword) {
+/*
+--------------------------
+  Registration fields validator
+---------------------------
+ */
+const registerValidator = (username, email, password, confirmPassword) => {
   if (username.length < 4 || username === '') {
     toastr.error('Username must be at least 4 characters long');
     return false;
@@ -22,6 +28,6 @@ function registerValidator(username, email, password, confirmPassword) {
   }
 
   return true;
-}
+};
 
 export default registerValidator;

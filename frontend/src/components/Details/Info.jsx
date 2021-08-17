@@ -3,6 +3,7 @@ import React from 'react';
 const Info = (props) => {
   const { addToCart, history, product, ingredients, options, onSelected } =
     props;
+
   const { _id, image, name, size, description, price, weight } = product || {};
 
   /*

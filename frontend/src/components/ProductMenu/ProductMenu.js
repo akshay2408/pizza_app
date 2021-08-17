@@ -27,8 +27,9 @@ const ProductMenu = (props) => {
 
   products = products.sort((a, b) => a.name.localeCompare(b.name));
   let productsCount = stats.productsCount;
-  const page = Number(props.match.params.page) || 1;
+  var page = Number(props.match.params.page) || 1;
   if (query !== '') {
+    page = 1;
     products = products.filter((p) =>
       p.name.toLowerCase().includes(query.toLowerCase())
     );

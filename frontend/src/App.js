@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route, withRouter } from 'react-router-dom';
+
 import toastr from 'toastr';
 
 import Auth from './utils/auth';
@@ -26,6 +28,7 @@ const App = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const dispatch = useDispatch();
+
   // selectors
   const stats = useSelector((state) => state.stats);
   const loginSuccess = useSelector((state) => state.login.success);
@@ -45,6 +48,11 @@ const App = (props) => {
     }
   }, [loginSuccess]);
 
+  /*
+----------------------------
+  Function to manage logout
+----------------------------
+ */
   const logout = () => {
     setLoggedIn(false);
     dispatch(logoutAction());

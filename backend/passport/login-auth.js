@@ -25,7 +25,7 @@ const login = new PassportLocalStrategy(
       const payload = {
         sub: user.id,
       };
-      const token = jwt.sign(payload, 's0m3 r4nd0m str1ng');
+      const token = jwt.sign(payload, process.env.JWT_SECRET);
       const data = {
         username: user.username,
       };

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import toastr from 'toastr';
 
+import CheckOutForm from './checkout';
 import CartRow from './CartRow';
 import './CartPage.css';
 import {
@@ -9,9 +11,26 @@ import {
   removeFromCartAction,
 } from '../../actions/cartActions';
 import { submitOrderAction } from '../../actions/ordersActions';
+import { paymentValidationFunc } from '../../utils/formValidator';
+
+const initialStates = {
+  userName: '',
+  address: '',
+  postalCode: '',
+  city: '',
+  phone: '',
+  cvc: '',
+  expiry: '',
+  cardHolderName: '',
+  cardNumber: '',
+};
 
 const Cart = (props) => {
   const { history } = props;
+  // states
+  const [toggle, setToggle] = useState(false);
+  const [inputs, setInputs] = useState(initialStates);
+
   // selectors
   const products = useSelector((state) => state.products);
   const cart = useSelector((state) => state.cart);
@@ -20,24 +39,87 @@ const Cart = (props) => {
   const dispatch = useDispatch();
 
   /*
-  ------------------------------
-    Function to manage checkout
-  ------------------------------
+  -----------------------------------
+    Function to manage input states
+  ----------------------------------
+  */
+  const onChange = (e) => {
+    const {
+      target: { name, value },
+    } = e;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+
+  /*
+  ------------------------------------
+    Function to manage checkout modal
+  ------------------------------------
   */
   const onCheckout = () => {
-    let product = [];
-    for (let element of cart) {
-      let fetchedProducts = products.find((p) => p._id === element.id);
-      product.push({
-        id: element.id,
-        name: fetchedProducts.name,
-        quantity: element.quantity,
-        price: fetchedProducts.price,
-        ingredients: element.ingredients,
-      });
+    setToggle(!toggle);
+  };
+
+  /*
+  -----------------------------------
+    Function to manage Payment order
+  ----------------------------------
+  */
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const {
+      userName,
+      address,
+      postalCode,
+      city,
+      phone,
+      cvc,
+      expiry,
+      cardHolderName,
+      cardNumber,
+    } = inputs;
+    let validObj = paymentValidationFunc(
+      userName,
+      address,
+      postalCode,
+      city,
+      phone,
+      cardNumber,
+      cardHolderName,
+      expiry,
+      cvc
+    );
+    if (validObj.validForm) {
+      const infoObject = {
+        ...inputs,
+        cardNumber: cardNumber.replace(/\d(?=\d{4})/g, '*'),
+        cvc: cvc.replace(/\d(?=)/gm, '*'),
+        cardType: validObj.cardType,
+      };
+
+      let product = [];
+      for (let element of cart) {
+        let fetchedProducts = products.find((p) => p._id === element.id);
+        product.push({
+          id: element.id,
+          name: fetchedProducts.name,
+          quantity: element.quantity,
+          price: fetchedProducts.price,
+          ingredients: element.ingredients,
+        });
+      }
+      const data = {
+        infoObject,
+        product,
+      };
+      setToggle(false);
+      dispatch(submitOrderAction(data));
+      history.push('/orders');
+    } else {
+      toastr.error('Please check form errors');
     }
-    dispatch(submitOrderAction(product));
-    history.push('/orders');
   };
 
   /*
@@ -94,6 +176,7 @@ const Cart = (props) => {
       {...props}
     />
   ));
+
   return (
     <div className='container'>
       <table id='cart' className='table table-hover table-condensed'>
@@ -133,6 +216,16 @@ const Cart = (props) => {
           </tr>
         </tfoot>
       </table>
+
+      <CheckOutForm
+        onToggle={toggle}
+        {...props}
+        onSubmit={onSubmit}
+        onChange={onChange}
+        inputs={inputs}
+        total={total}
+        onCheckout={onCheckout}
+      />
     </div>
   );
 };

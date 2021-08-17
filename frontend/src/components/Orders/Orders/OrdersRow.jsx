@@ -5,8 +5,10 @@ import Auth from '../../../utils/auth';
 
 const OrdersRow = (props) => {
   const isAdmin = Auth.isUserAdmin();
+
   const { ingredients, order } = props;
   const { date, products, status } = order;
+
   let totalPrice = 0;
   for (const product of products) {
     if (product.ingredients && product.ingredients.length > 0) {
@@ -32,7 +34,13 @@ const OrdersRow = (props) => {
       <td>{new Date(date).toLocaleString()}</td>
       <td>$ {totalPrice.toFixed(2)}</td>
       <td>
-        <span className='label label-info'>{status}</span>
+        <span
+          className={`label label-info font-weight-bold ${
+            status === 'Approved' ? 'text-success' : 'text-danger'
+          }`}
+        >
+          {status}
+        </span>
       </td>
       <td>
         <Link

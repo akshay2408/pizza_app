@@ -8,12 +8,12 @@ const { OrderModel } = require('../models');
 const create = async (req, res) => {
   const { body, user } = req;
   const { _id } = user;
-  const products = body;
+  const { product: products, infoObject } = body;
   let orderObj = {
     creator: _id,
     products,
+    ...infoObject,
   };
-
   OrderModel.create(orderObj)
     .then((createdOrder) => {
       res.status(200).json({

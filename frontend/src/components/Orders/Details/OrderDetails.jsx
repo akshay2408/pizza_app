@@ -71,7 +71,7 @@ const OrderDetails = (props) => {
     <div className='container mt-4'>
       <h1 className='text-center'>Order #{order._id}</h1>
       <div className='row space-top'>
-        <div className='col-md-12 mt-3'>
+        <div className='col-md-6 mt-3'>
           <p>
             <span className='font-weight-bold lead text-warning'>
               Products In Order:
@@ -89,6 +89,56 @@ const OrderDetails = (props) => {
               Total Price:
             </span>{' '}
             <span className='ml-2 lead'>${totalPrice.toFixed(2)}</span>
+          </p>
+
+          <p>
+            <span className='font-weight-bold lead text-info'>
+              Customer Details :-
+            </span>{' '}
+          </p>
+          <p>
+            <span className='font-weight-bold lead text-warning'>Name:</span>{' '}
+            <span className='ml-2 lead'>{order.userName}</span>
+          </p>
+          <p>
+            <span className='font-weight-bold lead text-warning'>Address:</span>{' '}
+            <span className='ml-2 lead'>{order.address}</span>
+          </p>
+          <p>
+            <span className='font-weight-bold lead text-warning'>
+              Postal code:
+            </span>{' '}
+            <span className='ml-2 lead'>{order.postalCode}</span>
+          </p>
+          <p>
+            <span className='font-weight-bold lead text-warning'>City:</span>{' '}
+            <span className='ml-2 lead'>{order.city}</span>
+          </p>
+          <p>
+            <span className='font-weight-bold lead text-warning'>Phone:</span>{' '}
+            <span className='ml-2 lead'>{order.phone}</span>
+          </p>
+        </div>
+        <div className='col-md-6 mt-3'>
+          <p>
+            <span className='font-weight-bold lead text-info'>
+              Payment Details:-
+            </span>{' '}
+          </p>
+          <p>
+            <span className='font-weight-bold lead text-warning'>
+              Card Number:
+            </span>{' '}
+            <span className='ml-2 lead'>
+              {order.cardType} {'  '}
+              {order.cardNumber}
+            </span>
+          </p>
+          <p>
+            <span className='font-weight-bold lead text-warning'>
+              Payment Status :
+            </span>{' '}
+            <span className='ml-2 lead text-success'>Succeed</span>
           </p>
         </div>
       </div>
