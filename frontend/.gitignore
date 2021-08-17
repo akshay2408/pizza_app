@@ -24,3 +24,10 @@ yarn-error.log*
 yarn.lock
 #ENV
 .env
+
+
+
+/cypress/videos
+/cypress/fixtures
+/cypress/plugins
+/cypress/support
